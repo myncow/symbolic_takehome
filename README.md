@@ -46,13 +46,6 @@ psql "$PGDSN" -c "SELECT title, og_site_name AS source, left(og_description, 80)
 psql "$PGDSN" -c "SELECT s.title, count(c.id) AS comments FROM hn_stories s JOIN hn_comments c ON c.story_item_id = s.item_id AND c.workflow_run_id = s.workflow_run_id GROUP BY s.title ORDER BY comments DESC LIMIT 15;"
 ```
 
-## Tests
-
-```bash
-uv sync --all-extras
-uv run pytest
-```
-
 ## Architecture
 
 Each scrape runs as a single Temporal workflow (`HackerNewsScrapeWorkflow`) that orchestrates six activities:
